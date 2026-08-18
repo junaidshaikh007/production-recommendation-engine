@@ -30,4 +30,4 @@ mlruns/
 .idea/
 .DS_Store
 Thumbs.db
-
+pip-install*.log

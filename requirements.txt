@@ -1,0 +1,15 @@
+# Core data and machine learning
+numpy
+pandas
+scipy
+scikit-learn
+pyarrow
+
+# Exploration and notebooks
+jupyterlab
+matplotlib
+seaborn
+
+# Quality checks
+pytest
+ruff

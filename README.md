@@ -52,4 +52,4 @@ Data pipeline --> recommenders --> evaluation --> model artifacts
 
 ## Status
 
-**Current milestone:** Day 1, Part 2 — repository foundation complete.
+**Current milestone:** Day 1, Part 3 — dataset acquisition and provenance complete.

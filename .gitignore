@@ -31,3 +31,4 @@ mlruns/
 .DS_Store
 Thumbs.db
 pip-install*.log
+dataset-download*.log

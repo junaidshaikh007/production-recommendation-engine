@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Iterable
 
 import pandas as pd
@@ -100,3 +102,14 @@ def encode_interactions(interactions: pd.DataFrame, encoders: EncoderBundle) -> 
         encoders.item_encoder.transform(encoded["item_id"]), index=encoded.index, dtype="int32"
     )
     return encoded
+
+
+def save_encoders(encoders: EncoderBundle, output_path: Path) -> None:
+    """Persist a fitted encoder bundle for reproducible training and serving."""
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(encoders.to_dict(), indent=2), encoding="utf-8")
+
+
+def load_encoders(input_path: Path) -> EncoderBundle:
+    """Load an encoder bundle previously persisted by save_encoders."""
+    return EncoderBundle.from_dict(json.loads(input_path.read_text(encoding="utf-8")))

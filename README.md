@@ -52,4 +52,4 @@ Data pipeline --> recommenders --> evaluation --> model artifacts
 
 ## Status
 
-**Current milestone:** Day 2 complete — validated, labeled, chronologically split, encoded, and featured data pipeline.
+**Current milestone:** Day 3 complete — popularity and trending recommendation baseline evaluated.

@@ -33,3 +33,4 @@ mlruns/
 Thumbs.db
 pip-install*.log
 dataset-download*.log
+popularity-run*.log

@@ -52,4 +52,4 @@ Data pipeline --> recommenders --> evaluation --> model artifacts
 
 ## Status
 
-**Current milestone:** Day 3 complete — popularity and trending recommendation baseline evaluated.
+**Current milestone:** Day 4 in progress — building content-based recommender.

@@ -52,4 +52,4 @@ Data pipeline --> recommenders --> evaluation --> model artifacts
 
 ## Status
 
-**Current milestone:** Day 4 in progress — building content-based recommender.
+**Current milestone:** Day 4 complete — content-based recommendation baseline evaluated.

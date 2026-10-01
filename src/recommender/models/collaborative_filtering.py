@@ -15,10 +15,10 @@ from recommender.models.popularity import PopularityRecommender
 class CollaborativeFilteringRecommender:
     """Recommend items based on collaborative filtering (matrix factorization)."""
 
-    def __init__(self, n_factors: int = 50) -> None:
+    def __init__(self, n_factors: int = 50, fallback_recommender: object | None = None) -> None:
         self.n_factors = n_factors
         self.mf_model = MatrixFactorizationModel(n_factors=self.n_factors)
-        self.fallback_recommender = PopularityRecommender()
+        self.fallback_recommender = fallback_recommender or PopularityRecommender()
 
         self.user_id_to_idx: dict[str, int] = {}
         self.item_idx_to_id: dict[int, str] = {}

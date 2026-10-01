@@ -52,4 +52,4 @@ Data pipeline --> recommenders --> evaluation --> model artifacts
 
 ## Status
 
-**Current milestone:** Day 4 complete — content-based recommendation baseline evaluated.
+**Current milestone:** Day 5 complete — collaborative filtering (matrix factorization) baseline evaluated.

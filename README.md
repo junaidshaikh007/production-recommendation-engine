@@ -50,6 +50,17 @@ Data pipeline --> recommenders --> evaluation --> model artifacts
                          FastAPI + dashboard
 ```
 
+## Evaluation Metrics
+
+Performance comparison of Top-10 recommendations across models:
+
+| Model | Precision@10 | Recall@10 | MAP@10 | NDCG@10 |
+|-------|--------------|-----------|---------|---------|
+| Popularity (Day 3) | 0.00207 | 0.02075 | 0.00443 | 0.00816 |
+| Content-Based (Day 4) | 0.00090 | 0.00883 | 0.00311 | 0.00445 |
+| Collaborative Filtering (Day 5) | 0.00099 | 0.00992 | 0.00323 | 0.00479 |
+| **Hybrid (Day 6)** | **0.00125** | **0.01235** | **0.00412** | **0.00612** |
+
 ## Status
 
-**Current milestone:** Day 6 in progress — hybrid recommender (combining content-based + collaborative filtering).
+**Current milestone:** Day 6 complete — hybrid recommender evaluated against baselines.

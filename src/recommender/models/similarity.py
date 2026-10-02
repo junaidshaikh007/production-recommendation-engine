@@ -43,8 +43,10 @@ def build_user_profiles(
         if valid_indices:
             # Get the submatrix of TF-IDF vectors for this user's positive items
             user_items_matrix = item_tfidf_matrix[valid_indices]
-            # Calculate the average vector as the user profile (dense array)
-            user_profile = np.asarray(user_items_matrix.mean(axis=0)).flatten()
+            # Convert to dense numpy array before averaging to bypass scipy's
+            # internal sparse matmul path which is broken on Python 3.14+.
+            # The submatrix is small (few items × vocab), so this is safe.
+            user_profile = user_items_matrix.toarray().mean(axis=0)
             user_profiles[user_id] = user_profile
             
     return user_profiles

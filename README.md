@@ -61,6 +61,16 @@ Performance comparison of Top-10 recommendations across models:
 | Collaborative Filtering (Day 5) | 0.00099 | 0.00992 | 0.00323 | 0.00479 |
 | **Hybrid (Day 6)** | **0.00125** | **0.01235** | **0.00412** | **0.00612** |
 
+## Serving & Deployment
+
+To run the API and access the dashboard:
+1. Ensure your environment has the required dependencies (`pip install fastapi uvicorn`).
+2. Start the Uvicorn server from the project root:
+   ```bash
+   uvicorn recommender.api.app:app --reload
+   ```
+3. Open your browser and navigate to `http://localhost:8000/dashboard` to interact with the engine.
+
 ## Status
 
-**Current milestone:** Day 6 complete — hybrid recommender evaluated against baselines.
+**Current milestone:** Day 7 complete — FastAPI serving and web dashboard implemented!

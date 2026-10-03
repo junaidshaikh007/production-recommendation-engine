@@ -1,4 +1,4 @@
-﻿"""A hybrid recommendation model combining content-based and collaborative filtering.
+"""A hybrid recommendation model combining content-based and collaborative filtering.
 
 The hybrid model blends normalised scores from a ContentBasedRecommender and a
 CollaborativeFilteringRecommender using configurable per-model weights.  Cold-start
@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import pickle
 from collections import defaultdict
 from collections.abc import Iterable
 from pathlib import Path
@@ -200,6 +201,26 @@ class HybridRecommender:
             recommendations.extend(fallback_recs)
 
         return recommendations
+
+    # ------------------------------------------------------------------
+    # Model Persistence
+    # ------------------------------------------------------------------
+
+    def save(self, path: Path | str) -> None:
+        """Serialize the fitted HybridRecommender to disk."""
+        if not self.is_fitted:
+            raise ValueError("Model must be fitted before saving.")
+        path = Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with open(path, "wb") as f:
+            pickle.dump(self, f)
+
+    @classmethod
+    def load(cls, path: Path | str) -> HybridRecommender:
+        """Load a serialized HybridRecommender from disk."""
+        with open(path, "rb") as f:
+            model = pickle.load(f)
+        return model
 
 
 # ------------------------------------------------------------------

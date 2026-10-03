@@ -13,3 +13,7 @@ seaborn
 # Quality checks
 pytest
 ruff
+
+# API and serving
+fastapi
+uvicorn

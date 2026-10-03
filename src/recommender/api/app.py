@@ -29,6 +29,15 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Recommendation API", lifespan=lifespan)
 
+# Mount the static directory to serve index.html
+static_dir = Path(__file__).parent / "static"
+app.mount("/dashboard", StaticFiles(directory=static_dir, html=True), name="static")
+
+@app.get("/")
+def redirect_to_dashboard():
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/dashboard")
+
 class RecommendationRequest(BaseModel):
     user_id: str
     k: int = 10

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation Dashboard</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .results {
+            margin-top: 2rem;
+        }
+        .recommendation-list {
+            list-style: none;
+            padding: 0;
+        }
+        .recommendation-list li {
+            background: #ecf0f1;
+            margin-bottom: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+        .error {
+            color: #e74c3c;
+            background: #fdf0ed;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recommendation Engine</h1>
+        <div class="form-group">
+            <label for="userId">User ID</label>
+            <input type="text" id="userId" placeholder="Enter User ID..." value="A123">
+        </div>
+        <div class="form-group">
+            <label for="numRecs">Number of Recommendations</label>
+            <input type="number" id="numRecs" value="10" min="1" max="50">
+        </div>
+        <button onclick="getRecommendations()">Get Recommendations</button>
+
+        <div class="results" id="resultsArea" style="display: none;">
+            <h2>Results for <span id="displayUser"></span></h2>
+            <ul class="recommendation-list" id="recList">
+                <!-- Recommendations will be injected here -->
+            </ul>
+        </div>
+        <div id="errorArea" class="error" style="display: none;"></div>
+    </div>
+
+    <script>
+        async function getRecommendations() {
+            const userId = document.getElementById('userId').value.trim();
+            const k = document.getElementById('numRecs').value;
+            const resultsArea = document.getElementById('resultsArea');
+            const errorArea = document.getElementById('errorArea');
+            const recList = document.getElementById('recList');
+            const displayUser = document.getElementById('displayUser');
+
+            // Reset UI
+            resultsArea.style.display = 'none';
+            errorArea.style.display = 'none';
+            recList.innerHTML = '';
+
+            if (!userId) {
+                errorArea.textContent = 'Please enter a valid User ID.';
+                errorArea.style.display = 'block';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/recommend/${userId}?k=${k}`);
+                if (!response.ok) {
+                    const errData = await response.json();
+                    throw new Error(errData.detail || 'Failed to fetch recommendations');
+                }
+
+                const data = await response.json();
+                
+                displayUser.textContent = data.user_id;
+                
+                if (data.recommendations && data.recommendations.length > 0) {
+                    data.recommendations.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = item;
+                        recList.appendChild(li);
+                    });
+                } else {
+                    const li = document.createElement('li');
+                    li.textContent = 'No recommendations found.';
+                    recList.appendChild(li);
+                }
+
+                resultsArea.style.display = 'block';
+
+            } catch (error) {
+                errorArea.textContent = error.message;
+                errorArea.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
